@@ -1,7 +1,10 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entities/User";
+import { User } from "./models/User";
 import "dotenv/config";
+import { ParkingHistory } from "./models/ParkingHistory";
+import { ParkingZone } from "./models/ParkingZone";
+import { Auto } from "./models/Auto";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -10,7 +13,7 @@ export const AppDataSource = new DataSource({
   username: process.env.PG_USERNAME,
   password: process.env.PG_PASSWORD,
   database: "car-parking",
-  entities: [User],
+  entities: [User, Auto, ParkingHistory, ParkingZone],
   synchronize: true,
   logging: true,
   subscribers: [],

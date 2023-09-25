@@ -1,37 +1,22 @@
 import express from "express";
-import { User } from "./entities/User";
 import { AppDataSource } from "./data-source";
-import bcrypt from "bcrypt";
 import "dotenv/config";
+
+import userRoutes from "./routes/userRoutes";
+import userProfileRoutes from "./routes/userProfileRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 const app = express();
 const PORT = process.env.PORT ?? 8000;
 
 app.use(express.json());
 
+app.use("/api/users", userRoutes);
+app.use("/api/user-profile", userProfileRoutes);
+app.use("/api/admin", adminRoutes);
+
 app.get("/", (req, res) => {
   res.send("Hello");
-});
-
-app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
-
-  const existingUser = await User.findOne({ where: { username } });
-  if (existingUser) {
-    return res.status(400).json({ error: "Username is already taken" });
-  }
-
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User();
-    user.username = username;
-    user.password = hashedPassword;
-
-    await user.save();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Something went wrong" });
-  }
 });
 
 app.listen(PORT, async () => {
