@@ -26,6 +26,9 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
+  @Column({ type: "decimal", default: 100.0 })
+  virtualBalance!: number;
+
   @Column({ nullable: true })
   resetToken?: string;
 

@@ -4,6 +4,7 @@ import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { ParkingReservation } from "../models/ParkingReservation";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 export const registerUser = async (req: Request, res: Response) => {
